@@ -15,7 +15,7 @@ jobs:
 
       - name: Make changes to commit
         run: |
-          ./gradlew --write-locks
+          echo "# actions-bot time is $(date --rfc-3339=seconds)" > versions.lock
           git add versions.lock
 
       - name: Commit changes to the PR branch
