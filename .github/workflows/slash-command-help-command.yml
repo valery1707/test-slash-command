@@ -6,15 +6,22 @@ jobs:
   help:
     runs-on: ubuntu-latest
     steps:
-      - name: Update comment
+      - name: Reply with new comment
         uses: peter-evans/create-or-update-comment@v3
         with:
           token: ${{ secrets.PAT }}
           repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
-          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          issue-number: ${{ github.event.client_payload.github.payload.issue.number }}
           body: |
             > Command | Description
             > --- | ---
             > /help | Show this information
             > /update-versions-lock | Update the [versions.lock](../blob/main/versions.lock) file within the last commit in the branch
+          reaction-type: hooray
+      - name: React to original comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.PAT }}
+          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
           reaction-type: hooray
